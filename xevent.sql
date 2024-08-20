@@ -1,7 +1,9 @@
 请按照如下步骤收集信息：
-1．在sqd-gdp-eas-prd-th-03_ro上运行step 1~3
-2．开启压测
-3．压测完成后执行step 4
+1.连接到primary上运行step 1 -2 以创建xevent
+2.在sqd-gdp-eas-prd-th-03_ro上查看ADS_Standard_Azure这个session有没有创建出来
+3.如果创建了，就运行step 3开启session
+4. 完成压测
+5. 运行step 4 关闭session
 
 
 
