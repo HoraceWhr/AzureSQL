@@ -44,20 +44,10 @@ GO
 ------  The event session has an event with an action,
 ------  and a has a target.
  
-IF EXISTS
-    (SELECT * from sys.database_event_sessions
-        WHERE name = 'cssdebugsession')
-BEGIN
-    DROP
-        EVENT SESSION
-            cssdebugsession
-        ON DATABASE;
-END
-GO
  
-CREATE
+ALTER
     EVENT SESSION
-        cssdebugsession
+        ADS_Standard_Azure
     ON DATABASE
  
 ADD EVENT sqlserver.attention(
@@ -114,7 +104,7 @@ GO
  
 ALTER
     EVENT SESSION
-        cssdebugsession
+        ADS_Standard_Azure
     ON DATABASE
     STATE = START;
 GO
@@ -129,7 +119,7 @@ GO
  
 ALTER
     EVENT SESSION
-        cssdebugsession
+       ADS_Standard_Azure
     ON DATABASE
     STATE = STOP;
 GO
