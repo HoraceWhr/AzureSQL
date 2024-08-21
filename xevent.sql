@@ -1,9 +1,9 @@
-请按照如下步骤收集信息：
-1.连接到primary上运行step 1 -2 以创建xevent
-2.在sqd-gdp-eas-prd-th-03_ro上查看ADS_Standard_Azure这个session有没有创建出来
-3.如果创建了，就运行step 3开启session
-4. 完成压测
-5. 运行step 4 关闭session
+Please follow below steps to collect the trace：
+1.connect to your primary db and run step 1 -2  to modify xevent session ADS_Standard_Azure
+2.wait for several mins and connect to sqd-gdp-eas-prd-th-03_ro to check if ADS_Standard_Azure has been changed on replica
+3.run steps 3 to start the session
+4. finish the load test
+5. run step 4 to stop the session
 
 
 
