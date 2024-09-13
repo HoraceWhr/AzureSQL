@@ -52,26 +52,37 @@ create
  
 ADD EVENT sqlserver.attention(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.blocked_process_report(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.error_reported(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.execution_warning(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
 ADD EVENT sqlserver.login(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
 ADD EVENT sqlserver.logout(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sp_statement_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sp_statement_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sql_batch_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sql_batch_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sql_statement_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sql_statement_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sqlos.wait_info(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sqlserver.rpc_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
-ADD EVENT sqlserver.rpc_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed))
-          
+ 
+ ADD EVENT sqlserver.rpc_starting(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ADD EVENT sqlserver.rpc_completed(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ 
+ ADD EVENT sqlserver.sp_statement_starting(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+  ADD EVENT sqlserver.sp_statement_completed(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ 
+ADD EVENT sqlserver.sql_batch_starting(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ ADD EVENT sqlserver.sql_batch_completed(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ 
+ADD EVENT sqlserver.sql_statement_starting(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ADD EVENT sqlserver.sql_statement_completed(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ 
+ ADD EVENT sqlos.wait_info(
+     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
+ ADD EVENT sqlserver.blocked_process_report(
+    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack))
+ 
+ 
        ADD TARGET
         package0.event_file
             (
