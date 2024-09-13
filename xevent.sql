@@ -1,9 +1,7 @@
 Please follow below steps to collect the trace：
-1.connect to your primary db and run step 1 -2  to modify xevent session ADS_Standard_Azure
-2.wait for several mins and connect to sqd-gdp-eas-prd-th-03_ro to check if ADS_Standard_Azure has been changed on replica
-3.run steps 3 to start the session
-4. finish the load test
-5. run step 4 to stop the session
+1.run steps 3 to start the session
+2. repro the issue
+3. run step 4 to stop the session
 
 
 
@@ -47,18 +45,14 @@ GO
 ------  and a has a target.
  
  
-ALTER
+create
     EVENT SESSION
-        ADS_Standard_Azure
+        cssdebug
     ON DATABASE
  
 ADD EVENT sqlserver.attention(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.begin_tran_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
 ADD EVENT sqlserver.blocked_process_report(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.commit_tran_completed(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
 ADD EVENT sqlserver.error_reported(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
@@ -68,20 +62,16 @@ ADD EVENT sqlserver.login(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
 ADD EVENT sqlserver.logout(
     ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.rollback_tran_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.rpc_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.sp_statement_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.sql_batch_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-ADD EVENT sqlserver.sql_statement_completed(
-    ACTION(sqlserver.client_app_name,sqlserver.client_connection_id,sqlserver.client_hostname,sqlserver.client_pid,sqlserver.num_response_rows,sqlserver.query_hash,sqlserver.query_plan_hash,sqlserver.session_id,sqlserver.sql_text,sqlserver.tsql_stack)),
-
-   
-
-         
+ADD EVENT sp_statement_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sp_statement_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sql_batch_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sql_batch_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sql_statement_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sql_statement_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sqlos.wait_info(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sqlserver.rpc_completed(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed)),
+ADD EVENT sqlserver.rpc_starting(ACTION(event_sequence, request_id, session_id, database_name, client_app_name, client_hostname, username, client_pid,sql_text,query_plan_hash,query_plan_hash_signed,query_hash,query_hash_signed))
+          
        ADD TARGET
         package0.event_file
             (
@@ -106,7 +96,7 @@ GO
  
 ALTER
     EVENT SESSION
-        ADS_Standard_Azure
+         cssdebug
     ON DATABASE
     STATE = START;
 GO
@@ -121,7 +111,7 @@ GO
  
 ALTER
     EVENT SESSION
-       ADS_Standard_Azure
+        cssdebug
     ON DATABASE
     STATE = STOP;
 GO
