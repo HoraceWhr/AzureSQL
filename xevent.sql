@@ -1,5 +1,5 @@
 Please follow below steps to collect the trace：
-1.run steps 3 to start the session
+1.run steps 1-3 to start the session
 2. repro the issue
 3. run step 4 to stop the session
 
