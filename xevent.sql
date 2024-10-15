@@ -1,7 +1,10 @@
 Please follow below steps to collect the trace：
-1.run steps 1-3 to start the session
-2. repro the issue
-3. run step 4 to stop the session
+1. replace with your storage account and SAS key
+2.run steps 1-3 to start the session
+3. repro the issue
+4. run step 4 to stop the session
+5.upload the event logs in blob container 
+ 
 
 
 
@@ -36,7 +39,7 @@ CREATE
        [https://mssqldebug.blob.core.windows.net/cssdebug]
     WITH
         IDENTITY = 'SHARED ACCESS SIGNATURE',  -- "SAS" token.
-        SECRET = 'sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-11-09T11:13:30Z&st=2024-08-12T03:13:30Z&spr=https&sig=ApeE1pw4WJs%2FatA5FVheOFXFbl9LoMk7L7axqox%2BRoY%3D'
+        SECRET = 'sv=2022-11-02&ss=bfqt&srt=sco&sp=rwdlacupiytfx&se=2024-10-15T21:31:02Z&st=2024-10-15T13:31:02Z&spr=https&sig=%2BEQkyGb04MiVQb1d0yI3Ro91bP6zxHDjdmTckhKIfkE%3D' --- replace with your own SAS key   https://learn.microsoft.com/en-us/azure/ai-services/translator/document-translation/how-to-guides/create-sas-tokens?tabs=blobs#create-sas-tokens-in-the-azure-portal
     ;
 GO
  
@@ -89,7 +92,7 @@ ADD EVENT sqlserver.summarized_oom_snapshot(
             (
            -- Also, tweak the .xel file name at end, if you like.
             SET filename =
-                'https://mssqldebug.blob.core.windows.net/cssdebug/xevent_perf.xel'
+                'https://mssqldebug.blob.core.windows.net/cssdebug/xevent_perf.xel'  ----- replace with your own storage account and container
             )
     WITH
         (MAX_MEMORY = 100 MB,
