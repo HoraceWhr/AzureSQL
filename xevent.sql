@@ -3,7 +3,7 @@ Please follow below steps to collect the trace：
 2.run steps 1-3 to start the session
 3. repro the issue
 4. run step 4 to stop the session
-5.upload the event logs 
+5.upload the event logs stored in storage account
  
 
 
